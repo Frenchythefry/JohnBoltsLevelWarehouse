@@ -183,7 +183,7 @@ namespace JohnBoltsLevelWarehouse
             GameObject expobj = GameObject.Instantiate(FileBrowser.FileExplorerPrefab, canvasObject.transform);
             RectTransform expTransform = expobj.GetComponent<RectTransform>();
             expTransform.localScale = new Vector2(0.5f, 0.5f);
-            FileBrowser fileBrowser = new FileBrowser(expobj);
+            FileBrowser fileBrowser = new FileBrowser(expobj, "Import Level");
 
             GameObject SelectorObj = GameObject.Instantiate(levelSelectPrefab, canvasObject.transform);
             RectTransform SelectTransform = SelectorObj.GetComponent<RectTransform>();

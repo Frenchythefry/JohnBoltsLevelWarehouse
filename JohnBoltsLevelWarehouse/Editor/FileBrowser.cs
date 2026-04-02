@@ -108,11 +108,13 @@ namespace JohnBoltsLevelWarehouse.Editor
             });
             //LoadDirectoryToFolderContents("/home/frenchy/.local/share/Steam/steamapps/common/Thunder Jumper/");
         }
-        public FileBrowser(GameObject FileExplorerObj)
+        public FileBrowser(GameObject FileExplorerObj, string title)
         {
             FileExplorer = FileExplorerObj;
             FolderContents = FileExplorer.transform.GetChild(3).gameObject;
             //FolderPicker = FileExplorer.transform.GetChild(5).gameObject;
+            TMP_Text TitleText = FileExplorer.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>();
+            TitleText.text = title;
             Button CloseButton = FileExplorer.transform.GetChild(0).GetChild(1).GetComponent<Button>();
             CloseButton.onClick.AddListener(() =>
             {
