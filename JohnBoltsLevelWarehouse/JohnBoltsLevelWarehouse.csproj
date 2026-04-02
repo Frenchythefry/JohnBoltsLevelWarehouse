@@ -1,52 +1,338 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>  <!-- ← change this -->
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
+        <EmbeddedResource Include="Resources/objects.bundle" />
+        <EmbeddedResource Include="Resources/leveleditor.bundle"/>
+        <EmbeddedResource Include="Resources/leveleditorprefabs.bundle"/>
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Arrow_Down.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Arrow_Next.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Arrow_Prev.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Arrow_Up.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Document.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Folder.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Lock.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Minus.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Music_2.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Paper.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Energy.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Photo.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Plus.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Unlock.Png" />
+        <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Video.Png" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Reference Include="0Harmony">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\MelonLoader\net6\0Harmony.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\MelonLoader\0Harmony.dll</HintPath>
       </Reference>
       <Reference Include="Assembly-CSharp">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Assembly-CSharp.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Assembly-CSharp.dll</HintPath>
       </Reference>
       <Reference Include="MelonLoader">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\MelonLoader\net6\MelonLoader.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\MelonLoader\MelonLoader.dll</HintPath>
+      </Reference>
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.2D.Animation.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.2D.Animation.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.2D.Common.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.2D.Common.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.2D.IK.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.2D.IK.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.2D.PixelPerfect">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.2D.PixelPerfect.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.2D.SpriteShape.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.2D.Tilemap.Extras">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.2D.Tilemap.Extras.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.AI.Navigation">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.AI.Navigation.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Burst">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.Burst.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Burst.Unsafe">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.Burst.Unsafe.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Collections">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.Collections.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Collections.LowLevel.ILSupport">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.InputSystem">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.InputSystem.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.InputSystem.ForUI">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.InputSystem.ForUI.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.InternalAPIEngineBridge.001">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.InternalAPIEngineBridge.001.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Mathematics">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.Mathematics.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Postprocessing.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.Postprocessing.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipelines.Core.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
       </Reference>
       <Reference Include="Unity.TextMeshPro">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Timeline">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.Timeline.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.VisualScripting.Core">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.VisualScripting.Core.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.VisualScripting.Flow">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.VisualScripting.Flow.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.VisualScripting.State">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\Unity.VisualScripting.State.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AccessibilityModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AIModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AndroidJNIModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AnimationModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ARModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ARModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AssetBundleModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AudioModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ClothModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ClusterInputModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ClusterRendererModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ContentLoadModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ContentLoadModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.CoreModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.CrashReportingModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.DirectorModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.DSPGraphModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.DSPGraphModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.GameCenterModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.GIModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.GIModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.GridModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.HotReloadModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.ImageConversionModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.IMGUIModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.InputLegacyModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.InputModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.JSONSerializeModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.LocalizationModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.LocalizationModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.NVIDIAModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.NVIDIAModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ParticleSystemModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.PerformanceReportingModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.Physics2DModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.PhysicsModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ProfilerModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.PropertiesModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.PropertiesModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ScreenCaptureModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.SharedInternalsModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.SpriteMaskModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.SpriteShapeModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.StreamingModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.StreamingModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.SubstanceModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.SubsystemsModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TerrainModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TerrainPhysicsModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TextCoreFontEngineModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TextCoreTextEngineModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TextRenderingModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.TilemapModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TLSModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UI">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UI.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UI.dll</HintPath>
       </Reference>
       <Reference Include="UnityEngine.UIElementsModule">
-        <HintPath>..\..\..\.local\share\Steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UIModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UmbraModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityAnalyticsModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityConnectModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityCurlModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityCurlModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityTestProtocolModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityWebRequestModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VehiclesModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VFXModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VideoModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VirtualTexturingModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.VirtualTexturingModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VRModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.WindModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.WindModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.XRModule">
+        <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.XRModule.dll</HintPath>
       </Reference>
     </ItemGroup>
 
