@@ -41,6 +41,7 @@ namespace JohnBoltsLevelWarehouse
         public AssetBundle levPrefBundle;
         public static GameObject buttonPrefab;
         public static GameObject levelSelectPrefab;
+        public static GameObject paintingPrefab;
         public string editorScene;
         public static bool allowSwap;
         public static bool MDHasLoaded;
@@ -88,6 +89,8 @@ namespace JohnBoltsLevelWarehouse
             Editor.LayerManager.layerUIPrefab = levPrefBundle.LoadAsset<GameObject>("LayerPickerItem");
             buttonPrefab = levPrefBundle.LoadAsset<GameObject>("Buttons");
             levelSelectPrefab = levPrefBundle.LoadAsset<GameObject>("OpenLevel");
+            paintingPrefab = levPrefBundle.LoadAsset<GameObject>("Painting");
+
             if (!Directory.Exists(Path.Combine(MelonUtils.GameDirectory, "Levels")))
             {
                 Directory.CreateDirectory(Path.Combine(MelonUtils.GameDirectory, "Levels"));
@@ -195,14 +198,27 @@ namespace JohnBoltsLevelWarehouse
                 if (obj.name == "WORLD SELECT")
                 {
                     canvasObject = obj;
+                    RectTransform rect1 = obj.transform.GetChild(5).GetComponent<RectTransform>();
+                    rect1.position = new Vector2(rect1.position.x + 1.5f, rect1.position.y);
+                    RectTransform rect4 = obj.transform.GetChild(8).GetComponent<RectTransform>();
+                    rect4.position = new Vector2(rect4.position.x - 1.5f, rect4.position.y);
+                    RectTransform rect2 = obj.transform.GetChild(6).GetComponent<RectTransform>();
+                    rect2.position = new Vector2(rect2.position.x - 0.25f, -2.5f);
+                    RectTransform rect3 = obj.transform.GetChild(7).GetComponent<RectTransform>();
+                    rect3.position = new Vector2(rect3.position.x + 0.25f, -2.5f);
                     break;
                 }
             }
 
+
+            GameObject painting = GameObject.Instantiate(paintingPrefab, canvasObject.transform);
+            RectTransform paintingRect = painting.GetComponent<RectTransform>();
+            paintingRect.position = new Vector2(0, 1.35f);
+            paintingRect.localScale = new Vector2(1.75f, 1.75f);
+
             GameObject Buttons = GameObject.Instantiate(buttonPrefab, canvasObject.transform);
             RectTransform buttonRect = Buttons.GetComponent<RectTransform>();
-            buttonRect.position = new Vector2(0, 1);
-            buttonRect.localScale = new Vector2(0.5f, 0.5f);
+            buttonRect.localScale = new Vector2(0.6f, 0.6f);
 
             GameObject expobj = GameObject.Instantiate(FileBrowser.FileExplorerPrefab, canvasObject.transform);
             RectTransform expTransform = expobj.GetComponent<RectTransform>();
@@ -222,6 +238,11 @@ namespace JohnBoltsLevelWarehouse
             GameObject LevelSelectParent = SelectTransform.GetChild(1).gameObject;
             TMP_Dropdown LevelDropdown = LevelSelectParent.transform.GetChild(1).GetComponent<TMP_Dropdown>();
             LevelEditorFrontend.PropogateLevelSelect(LevelDropdown);
+
+            painting.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() =>
+            {
+                Buttons.SetActive(true);
+            });
 
             Button OpenInEditorButton = SelectTransform.GetChild(2).GetComponent<Button>();
             OpenInEditorButton.onClick.AddListener(() =>
@@ -263,6 +284,12 @@ namespace JohnBoltsLevelWarehouse
                     }
                 }
             });
+
+            Button ButtonClose = buttonRect.GetChild(3).GetComponent<Button>();
+            ButtonClose.onClick.AddListener(() =>
+            {
+                Buttons.SetActive(false);
+            });
         }
         public void OpenLevel(string userInput)
         {
@@ -271,7 +298,7 @@ namespace JohnBoltsLevelWarehouse
             archiveLoc = dir;
             if (!File.Exists(dir) && !Directory.Exists(dir))
             {
-                MelonLogger.Error("Level doesnt exist!");
+                MelonLogger.Error("Level doesn't exist!");
                 return;
             }
             if (dir.EndsWith(".tjl", StringComparison.OrdinalIgnoreCase))
