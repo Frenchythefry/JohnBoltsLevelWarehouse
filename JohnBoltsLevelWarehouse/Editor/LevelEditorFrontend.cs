@@ -14,6 +14,8 @@ using System.Linq;
 using Unity.VisualScripting;
 using JohnBoltsLevelWarehouse.Editor.UndoRedo;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 namespace JohnBoltsLevelWarehouse.Editor
 {
@@ -59,6 +61,7 @@ namespace JohnBoltsLevelWarehouse.Editor
             instance = this;
             new Drawing();
             SharedInit();
+            LayerManager.instance.AddLayer();
         }
 
         public LevelEditorFrontend(string levelToLoad)
@@ -193,14 +196,32 @@ namespace JohnBoltsLevelWarehouse.Editor
             Drawing.instance.TileDropdown = tileDropdown;
             Drawing.instance.TileImage = tileImage;
 
+            var openWatcher = tileDropdown.gameObject.AddComponent<DropdownOpenWatcher>();
+            openWatcher.OnOpened += () =>
+            {
+                int count = 0;
+                foreach (Button b in tileDropdown.transform.GetChild(3).GetComponentsInChildren<Button>())
+                {
+                    int num = count;
+                    b.onClick.RemoveAllListeners();
+                    b.onClick.AddListener(() =>
+                    {
+                        Drawing.instance.RemoveTileFromPalette(num);
+                    });
+                    count++;
+                }
+            };
+
             tileDropdown.onValueChanged.AddListener((int value) =>
             {
                 Drawing.instance.selectedTile = value;
                 tileImage.sprite = Drawing.instance.tiles[value].tile.sprite;
             });
+
+
             tileDropdown.SetValueWithoutNotify(Drawing.instance.selectedTile);
             tileDropdown.RefreshShownValue();
-            if (verboseLogging) MelonLogger.Msg("current tile stuff set");
+            if (verboseLogging) MelonLogger.Msg("current tile stuff set ");
         }
 
         private void WireGrid(GameObject leftBar)
@@ -729,10 +750,13 @@ namespace JohnBoltsLevelWarehouse.Editor
         {
             if (checkpoints.Count != 0)
             {
-                dropdown.options.RemoveAt(checkpoints.Count - 1);
-                checkpoints.RemoveAt(checkpoints.Count - 1);
-                GameObject.Destroy(checkpointGOs[checkpoints.Count - 1]);
-                checkpointGOs.RemoveAt(checkpoints.Count - 1);
+                int lastIndex = checkpoints.Count - 1;
+
+                dropdown.options.RemoveAt(lastIndex);
+                checkpoints.RemoveAt(lastIndex);
+                GameObject.Destroy(checkpointGOs[lastIndex]);
+                checkpointGOs.RemoveAt(lastIndex);
+
                 if (dropdown.value >= checkpoints.Count)
                 {
                     currentCheckpoint = checkpoints.Count - 1;
@@ -740,7 +764,6 @@ namespace JohnBoltsLevelWarehouse.Editor
                     dropdown.value = checkpoints.Count - 1;
                     dropdown.RefreshShownValue();
                 }
-
             }
         }
         public void SetCheckpointActive(int value)
@@ -1023,6 +1046,14 @@ namespace JohnBoltsLevelWarehouse.Editor
             {
                 return;
             }
+        }
+    }
+    public class DropdownOpenWatcher : MonoBehaviour, IPointerClickHandler
+    {
+        public Action OnOpened;
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            OnOpened?.Invoke();
         }
     }
     public enum Ability

@@ -8,8 +8,8 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Resources/objects.bundle" />
-        <EmbeddedResource Include="Resources/leveleditor.bundle"/>
-        <EmbeddedResource Include="Resources/leveleditorprefabs.bundle"/>
+        <EmbeddedResource Include="Resources/leveleditor.bundle" />
+        <EmbeddedResource Include="Resources/leveleditorprefabs.bundle" />
         <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Arrow_Down.Png" />
         <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Arrow_Next.Png" />
         <EmbeddedResource Include="Resources/Icons/Icon_PictoIcon_Arrow_Prev.Png" />
@@ -335,5 +335,4 @@
         <HintPath>..\..\..\..\steam\steam\steamapps\common\Thunder Jumper\Thunder Jumper_Data\Managed\UnityEngine.XRModule.dll</HintPath>
       </Reference>
     </ItemGroup>
-
 </Project>

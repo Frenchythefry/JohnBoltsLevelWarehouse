@@ -70,6 +70,45 @@ namespace JohnBoltsLevelWarehouse.Editor
             return ret;
 
         }
+        public void RemoveTileFromPalette(int index)
+        {
+            if (IsTileUsed(index))
+            {
+                LevelEditorFrontend.instance.ShowError("Cannot remove tile, it is currently in use.");
+                return;
+            }
+            if (index < tiles.Count)
+            {
+                tiles.RemoveAt(index);
+                TileDropdown.options.RemoveAt(index);
+                TileDropdown.Hide();
+                TileDropdown.RefreshShownValue();
+            }
+            if (selectedTile >= index)
+            {
+                selectedTile--;
+                TileDropdown.value = selectedTile;
+                TileDropdown.RefreshShownValue();
+            }
+        }
+        bool IsTileUsed(int index)
+        {
+            foreach (Layer layer in LayerManager.instance.layers)
+            {
+                for (int i = 0; i < layer.map.size.x; i++)
+                {
+                    for (int j = 0; j < layer.map.size.y; j++)
+                    {
+                        Vector3Int pos = new Vector3Int(i, j, 0);
+                        if (layer.map.HasTile(pos) && (Tile)layer.map.GetTile(pos) == tiles[index].tile)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
         public static Sprite ScaleSpriteToUnitSize(Sprite sprite, float targetUnitSize = 1)
         {
             float num = sprite.texture.width;

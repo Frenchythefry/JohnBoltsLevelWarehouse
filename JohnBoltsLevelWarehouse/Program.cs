@@ -15,9 +15,14 @@ using TMPro;
 using HarmonyLib;
 using Newtonsoft.Json;
 using JohnBoltsLevelWarehouse.Editor;
+using System.Security.Cryptography;
 
 [assembly: MelonInfo(typeof(JohnBoltsLevelWarehouse.Program), "John Bolt's Level Warehouse", "3.0.0", "Frenchy")]
 [assembly: MelonGame("Grouch", "Thunder Jumper")]
+[assembly: VerifyLoaderVersion(0, 5, 7)]
+[assembly: MelonAuthorColor(ConsoleColor.Cyan)]
+[assembly: MelonColor(ConsoleColor.Blue)]
+[assembly: MelonOptionalDependencies("ReplayMod")]
 //TO DO: 1. Fix entering after doing hardcore 2. Create custom end screen 3. Save best times and bolts? in playerprefs?
 namespace JohnBoltsLevelWarehouse
 {
@@ -40,8 +45,23 @@ namespace JohnBoltsLevelWarehouse
         public static bool allowSwap;
         public static bool MDHasLoaded;
         public string dir;
+        public string archiveLoc;
         public string tempfileloc;
         public Editor.LevelEditorFrontend editorFrontend;
+        bool replayModPresent = false;
+        public override void OnApplicationStart()
+        {
+            var targetType = AccessTools.TypeByName("ReplayMod.MainClass");
+            if (targetType == null) return; // mod not loaded
+
+            var original = AccessTools.Method(targetType, "UpdateReplay");
+            var patch = new HarmonyMethod(typeof(FixReplayModUpdate), nameof(FixReplayModUpdate.Prefix));
+            HarmonyInstance.Patch(original, prefix: patch);
+
+            var original2 = AccessTools.Method(targetType, "LoadReplay");
+            var patch2 = new HarmonyMethod(typeof(FixReplayModLoad), nameof(FixReplayModLoad.Prefix));
+            HarmonyInstance.Patch(original2, prefix: patch2);
+        }
         public override void OnInitializeMelon()
         {
             invisibleSolidTile = ScriptableObject.CreateInstance<Tile>();
@@ -68,6 +88,10 @@ namespace JohnBoltsLevelWarehouse
             Editor.LayerManager.layerUIPrefab = levPrefBundle.LoadAsset<GameObject>("LayerPickerItem");
             buttonPrefab = levPrefBundle.LoadAsset<GameObject>("Buttons");
             levelSelectPrefab = levPrefBundle.LoadAsset<GameObject>("OpenLevel");
+            if (!Directory.Exists(Path.Combine(MelonUtils.GameDirectory, "Levels")))
+            {
+                Directory.CreateDirectory(Path.Combine(MelonUtils.GameDirectory, "Levels"));
+            }
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
@@ -88,7 +112,7 @@ namespace JohnBoltsLevelWarehouse
         }
         public override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Insert))
+            /*if (Input.GetKeyDown(KeyCode.Insert))
             {
                 string input = "level";
                 //MelonLogger.Msg($"Input received: {input}");
@@ -97,7 +121,7 @@ namespace JohnBoltsLevelWarehouse
             if (Input.GetKeyDown(KeyCode.Home))
             {
                 LoadEditor();
-            }
+            }*/
             if (SceneManager.GetActiveScene().name == "LevelEditor" && SceneManager.GetActiveScene().isLoaded)
             {
                 if (editorFrontend != null)
@@ -244,6 +268,7 @@ namespace JohnBoltsLevelWarehouse
         {
             MDHasLoaded = false;
             dir = Path.Combine(MelonUtils.BaseDirectory, "Levels", (userInput + ".tjl"));
+            archiveLoc = dir;
             if (!File.Exists(dir) && !Directory.Exists(dir))
             {
                 MelonLogger.Error("Level doesnt exist!");
@@ -1038,4 +1063,66 @@ namespace JohnBoltsLevelWarehouse
             return true;
         }
     }
+    public class FixReplayModUpdate
+    {
+        public static bool Prefix(object __instance)
+        {
+            string persistentDataPath = Application.persistentDataPath;
+            Scene activeScene = SceneManager.GetActiveScene();
+            string path;
+            if (activeScene.name == "Moonlight District")
+            {
+                path = Path.Combine(persistentDataPath, "Replay" + (GetChecksum(Melon<Program>.Instance.archiveLoc) + ".txt"));
+            }
+            else
+            {
+                path = Path.Combine(persistentDataPath, "Replay" + (activeScene.buildIndex + ".txt"));
+            }
+            var lrField = __instance.GetType().GetField("loadedReplay", BindingFlags.NonPublic | BindingFlags.Instance);
+            var loadedReplay = lrField.GetValue(__instance) as List<List<string>>;
+            var replayField = __instance.GetType().GetField("replay", BindingFlags.NonPublic | BindingFlags.Instance);
+            var replay = replayField.GetValue(__instance) as List<List<string>>;
+            var convertMethod = __instance.GetType().GetMethod("ConvertToString", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (loadedReplay.Count() <= 1 || loadedReplay.Count() >= replay.Count())
+            {
+                string contents = (string)convertMethod.Invoke(__instance, new object[] { replay });
+                File.WriteAllText(path, contents);
+            }
+            return false;
+        }
+        public static string GetChecksum(string filePath)
+        {
+            using var sha = SHA256.Create();
+            using var stream = File.OpenRead(filePath);
+            byte[] hash = sha.ComputeHash(stream);
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+        }
+    }
+    public class FixReplayModLoad
+    {
+        public static bool Prefix(object __instance, ref List<List<string>> __result)
+        {
+            string persistentDataPath = Application.persistentDataPath;
+            Scene activeScene = SceneManager.GetActiveScene();
+            var convertMethod = __instance.GetType().GetMethod("ConvertToList", BindingFlags.NonPublic | BindingFlags.Instance);
+            string path;
+            if (activeScene.name == "Moonlight District")
+            {
+                path = Path.Combine(persistentDataPath, "Replay" + (FixReplayModUpdate.GetChecksum(Melon<Program>.Instance.archiveLoc) + ".txt"));
+            }
+            else
+            {
+                path = Path.Combine(persistentDataPath, "Replay" + (activeScene.buildIndex + ".txt"));
+            }
+            if (File.Exists(path))
+            {
+                string data = File.ReadAllText(path);
+                __result = (List<List<string>>)convertMethod.Invoke(__instance, new object[] { data });
+                return false;
+            }
+            __result = new List<List<string>>();
+            return false;
+        }
+    }
+    //FINISH REPLAY MOD SUPPOT
 }
